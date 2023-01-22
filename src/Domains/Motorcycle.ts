@@ -1,7 +1,7 @@
 import IMotorcycle from '../Interfaces/IMotorcycle';
 
 class Motorcycle {
-  private id: string;
+  private id: string | undefined;
   private model: string;
   private year: number;
   private color: string;
@@ -10,7 +10,7 @@ class Motorcycle {
   private category: string;
   private engineCapacity: number;
 
-  constructor(obj: Required<IMotorcycle>) {
+  constructor(obj: IMotorcycle) {
     this.id = obj.id;
     this.model = obj.model;
     this.year = obj.year;

@@ -1,7 +1,7 @@
 import ICar from '../Interfaces/ICar';
 
 class Car {
-  private id: string;
+  private id: string | undefined;
   private model: string;
   private year: number;
   private color: string;
@@ -10,7 +10,7 @@ class Car {
   private doorsQty: number;
   private seatsQty: number;
 
-  constructor(obj: Required<ICar>) {
+  constructor(obj: ICar) {
     this.id = obj.id;
     this.model = obj.model;
     this.year = obj.year;
