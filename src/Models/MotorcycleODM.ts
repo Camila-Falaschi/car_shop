@@ -7,7 +7,7 @@ class MotorcycleODM {
 
   constructor() {
     this.schema = new Schema<IMotorcyle>({
-      id: { type: String, required: true },
+      id: { type: String },
       model: { type: String, required: true },
       year: { type: Number, required: true },
       color: { type: String, required: true },
