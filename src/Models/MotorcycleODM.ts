@@ -5,7 +5,6 @@ import AbstractODM from './AbstractODM';
 class MotorcycleODM extends AbstractODM<IMotorcyle> {
   constructor() {
     const schema = new Schema<IMotorcyle>({
-      id: { type: String },
       model: { type: String, required: true },
       year: { type: Number, required: true },
       color: { type: String, required: true },
