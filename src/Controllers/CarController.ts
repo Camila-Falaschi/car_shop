@@ -35,6 +35,13 @@ class CarController {
     const car = await this.service.getCarById(id);
     return this.res.status(200).json(car);
   }
+
+  public async update() {
+    const car: Partial<ICar> = this.req.body;
+    const { id } = this.req.params;
+    await this.service.updateCar(id, car);
+    return this.res.status(204).json({});
+  }
 }
 
 export default CarController;
