@@ -1,12 +1,10 @@
-import { Model, Schema, model, models } from 'mongoose';
+import { Schema, isValidObjectId } from 'mongoose';
 import IMotorcyle from '../Interfaces/IMotorcycle';
+import AbstractODM from './AbstractODM';
 
-class MotorcycleODM {
-  protected model: Model<IMotorcyle>;
-  protected schema: Schema;
-
+class MotorcycleODM extends AbstractODM<IMotorcyle> {
   constructor() {
-    this.schema = new Schema<IMotorcyle>({
+    const schema = new Schema<IMotorcyle>({
       id: { type: String },
       model: { type: String, required: true },
       year: { type: Number, required: true },
@@ -16,11 +14,17 @@ class MotorcycleODM {
       category: { type: String, required: true },
       engineCapacity: { type: Number, required: true },
     });
-    this.model = models.Motorcycle || model('Motorcycle', this.schema);
+    super(schema, 'Motorcycle');
   }
 
-  public async create(motorcycle: IMotorcyle): Promise<IMotorcyle> {
-    return this.model.create({ ...motorcycle });
+  public async find(): Promise<IMotorcyle[]> {
+    return this.model.find();
+  }
+
+  public async findById(_id: string): Promise<IMotorcyle[]> {
+    if (!isValidObjectId(_id)) throw Error('Invalid Mongo id');
+
+    return this.model.find({ _id });
   }
 }
 

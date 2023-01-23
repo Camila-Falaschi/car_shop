@@ -24,6 +24,17 @@ class CarController {
       this.next(error);
     }
   }
+
+  public async getAllCars() {
+    const cars = await this.service.getAllCars();
+    return this.res.status(200).json(cars);
+  }
+
+  public async getCarById() {
+    const { id } = this.req.params;
+    const car = await this.service.getCarById(id);
+    return this.res.status(200).json(car);
+  }
 }
 
 export default CarController;
