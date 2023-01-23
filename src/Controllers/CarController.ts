@@ -39,8 +39,8 @@ class CarController {
   public async update() {
     const car: Partial<ICar> = this.req.body;
     const { id } = this.req.params;
-    await this.service.updateCar(id, car);
-    return this.res.status(204).json({});
+    const newCar = await this.service.updateCar(id, car);
+    return this.res.status(204).json(newCar);
   }
 }
 

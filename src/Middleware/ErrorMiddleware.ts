@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import AppErrors from '../Utils/AppErrors';
 
 class ErrorMiddleware {
   public static handler(
@@ -7,7 +8,8 @@ class ErrorMiddleware {
     res: Response,
     next: NextFunction,
   ) {
-    res.status(500).json({ message: error.message });
+    const { status, message } = error as AppErrors;
+    res.status(status || 500).json({ message });
     next();
   }
 }

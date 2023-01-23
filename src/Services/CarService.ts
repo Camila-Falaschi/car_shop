@@ -1,11 +1,10 @@
-import Car from '../Domains/Car';
+import Car from '../Domains/-test';
 import ICar from '../Interfaces/ICar';
 import CarODM from '../Models/CarODM';
 
 class CarService {
   private createCarDomain(car: ICar | null): Car | null {
     if (car) {
-      // const { id, model, year, color, status, buyValue, doorsQty, seatsQty } = car;
       return new Car(car);
     }
     return null;
