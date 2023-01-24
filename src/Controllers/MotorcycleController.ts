@@ -35,6 +35,17 @@ class MotorcycleController {
     const motorcycle = await this.service.getMotorcycleById(id);
     return this.res.status(200).json(motorcycle);
   }
+
+  public async update() {
+    const motorcycle: Partial<IMotorcyle> = this.req.body;
+    const { id } = this.req.params;
+    try {
+      const newMotorcycle = await this.service.updateMotorcycle(id, motorcycle);
+      return this.res.status(200).json(newMotorcycle);
+    } catch (error) {
+      this.next(error);
+    }
+  }
 }
 
 export default MotorcycleController;

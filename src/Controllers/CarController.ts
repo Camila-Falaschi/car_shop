@@ -19,6 +19,8 @@ class CarController {
     const car: ICar = this.req.body;
     try {
       const newCar = await this.service.create(car);
+      console.log(newCar);
+      
       return this.res.status(201).json(newCar);
     } catch (error) {
       this.next(error);
@@ -39,10 +41,12 @@ class CarController {
   public async update() {
     const car: Partial<ICar> = this.req.body;
     const { id } = this.req.params;
-    const newCar = await this.service.updateCar(id, car);
-    console.log(newCar);
-    
-    return this.res.status(204).json(newCar);
+    try {
+      const newCar = await this.service.updateCar(id, car);
+      return this.res.status(200).json(newCar);
+    } catch (error) {
+      this.next(error);
+    }
   }
 }
 

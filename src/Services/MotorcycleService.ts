@@ -35,6 +35,15 @@ class MotorcycleService {
     }
     throw new AppErrors(404, 'Motorcycle not found');
   }
+
+  public async updateMotorcycle(id: string, motorcycle: Partial<IMotorcyle>) {
+    const motorcycleODM = new MotorcycleODM();
+    const data = await motorcycleODM.update(id, motorcycle);
+    if (data) {
+      return this.createMotorcycleDomain(data);
+    } 
+    throw new AppErrors(404, 'Motorcycle not found');
+  }
 }
 
 export default MotorcycleService;
