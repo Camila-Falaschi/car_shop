@@ -40,6 +40,8 @@ class CarController {
     const car: Partial<ICar> = this.req.body;
     const { id } = this.req.params;
     const newCar = await this.service.updateCar(id, car);
+    console.log(newCar);
+    
     return this.res.status(204).json(newCar);
   }
 }

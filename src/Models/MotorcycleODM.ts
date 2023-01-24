@@ -1,5 +1,6 @@
 import { Schema, isValidObjectId } from 'mongoose';
 import IMotorcyle from '../Interfaces/IMotorcycle';
+import AppErrors from '../Utils/AppErrors';
 import AbstractODM from './AbstractODM';
 
 class MotorcycleODM extends AbstractODM<IMotorcyle> {
@@ -21,7 +22,7 @@ class MotorcycleODM extends AbstractODM<IMotorcyle> {
   }
 
   public async findById(_id: string): Promise<IMotorcyle[]> {
-    if (!isValidObjectId(_id)) throw Error('Invalid Mongo id');
+    if (!isValidObjectId(_id)) throw new AppErrors(422, 'Invalid mongo id');
 
     return this.model.find({ _id });
   }

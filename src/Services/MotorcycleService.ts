@@ -1,6 +1,7 @@
 import Motorcycle from '../Domains/Motorcycle';
 import IMotorcyle from '../Interfaces/IMotorcycle';
 import MotorcycleODM from '../Models/MotorcycleODM';
+import AppErrors from '../Utils/AppErrors';
 
 class MotorcycleService {
   private createMotorcycleDomain(motorcycle: IMotorcyle | null): Motorcycle | null {
@@ -28,9 +29,11 @@ class MotorcycleService {
   public async getMotorcycleById(id: string) {
     const motorcycleODM = new MotorcycleODM();
     const motorcycles = await motorcycleODM.findById(id);
-    const motorcycleArray = motorcycles
-      .map((motorcycle) => this.createMotorcycleDomain(motorcycle));
-    return motorcycleArray;
+    if (motorcycles.length > 0) {
+      const carArray = motorcycles.map((motorcycle) => this.createMotorcycleDomain(motorcycle));
+      return carArray[0];
+    }
+    throw new AppErrors(404, 'Motorcycle not found');
   }
 }
 
