@@ -19,8 +19,6 @@ class CarController {
     const car: ICar = this.req.body;
     try {
       const newCar = await this.service.create(car);
-      console.log(newCar);
-      
       return this.res.status(201).json(newCar);
     } catch (error) {
       this.next(error);

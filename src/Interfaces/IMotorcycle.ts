@@ -1,8 +1,8 @@
 import IVehicle from './IVehicle';
 
 interface IMotorcyle extends IVehicle {
-  category: string;
-  engineCapacity: number;
+  readonly category: string;
+  readonly engineCapacity: number;
 }
 
 export default IMotorcyle;
