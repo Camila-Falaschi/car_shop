@@ -1,17 +1,19 @@
-import { NextFunction, Request, Response } from 'express';
-import AppErrors from '../Utils/AppErrors';
+import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
+import { ErrorCatalogy, ErrorTypes } from '../Utils/ErrorTypes';
 
-class ErrorMiddleware {
-  public static handler(
-    error: Error,
-    _req: Request,
-    res: Response,
-    next: NextFunction,
-  ) {
-    const { status, message } = error as AppErrors;
-    res.status(status || 500).json({ message });
-    next();
+const ErrorMiddleware: ErrorRequestHandler = (
+  error: Error,
+  _req: Request,
+  res: Response,
+  _next: NextFunction,
+) => {
+  const messageErrors = error.message as ErrorTypes;
+  const mapError = ErrorCatalogy[messageErrors];
+  if (mapError) {
+    const { httpStatus, message } = mapError;
+    return res.status(httpStatus).json({ message });
   }
-}
+  return res.status(500).end();
+};
 
 export default ErrorMiddleware;

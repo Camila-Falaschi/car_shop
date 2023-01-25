@@ -2,6 +2,7 @@ import Car from '../Domains/Car';
 import ICar from '../Interfaces/ICar';
 import CarODM from '../Models/CarODM';
 import AppErrors from '../Utils/AppErrors';
+import { ErrorTypes } from '../Utils/ErrorTypes';
 
 class CarService {
   private createCarDomain(car: ICar | null): Car | null {
@@ -31,7 +32,7 @@ class CarService {
       const carArray = cars.map((car) => this.createCarDomain(car));
       return carArray[0];
     }
-    throw new AppErrors(404, 'Car not found');
+    throw Error(ErrorTypes.CarNotFound);
   }
 
   public async updateCar(id: string, car: Partial<ICar>) {

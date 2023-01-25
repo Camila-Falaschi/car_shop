@@ -1,6 +1,6 @@
 import { Schema, isValidObjectId } from 'mongoose';
 import ICar from '../Interfaces/ICar';
-import AppErrors from '../Utils/AppErrors';
+import { ErrorTypes } from '../Utils/ErrorTypes';
 import AbstractODM from './AbstractODM';
 
 class CarODM extends AbstractODM<ICar> {
@@ -22,7 +22,7 @@ class CarODM extends AbstractODM<ICar> {
   }
 
   public async findById(_id: string): Promise<ICar[]> {
-    if (!isValidObjectId(_id)) throw new AppErrors(422, 'Invalid mongo id');
+    if (!isValidObjectId(_id)) throw Error(ErrorTypes.InvalidMongoId);
 
     return this.model.find({ _id });
   }
