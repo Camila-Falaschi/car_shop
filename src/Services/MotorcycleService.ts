@@ -5,7 +5,6 @@ import MotorcycleODM from '../Models/MotorcycleODM';
 class MotorcycleService {
   private createMotorcycleDomain(motorcycle: IMotorcyle | null): Motorcycle | null {
     if (motorcycle) {
-      // const { id, model, year, color, status, buyValue, category, engineCapacity } = motorcycle;
       return new Motorcycle(motorcycle);
     }
     return null;
