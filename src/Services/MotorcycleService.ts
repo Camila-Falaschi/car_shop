@@ -1,7 +1,6 @@
 import Motorcycle from '../Domains/Motorcycle';
 import IMotorcyle from '../Interfaces/IMotorcycle';
 import MotorcycleODM from '../Models/MotorcycleODM';
-import AppErrors from '../Utils/AppErrors';
 
 class MotorcycleService {
   private createMotorcycleDomain(motorcycle: IMotorcyle | null): Motorcycle | null {
@@ -30,10 +29,11 @@ class MotorcycleService {
     const motorcycleODM = new MotorcycleODM();
     const motorcycles = await motorcycleODM.findById(id);
     if (motorcycles.length > 0) {
-      const carArray = motorcycles.map((motorcycle) => this.createMotorcycleDomain(motorcycle));
-      return carArray[0];
+      const motorcycleArray = motorcycles
+        .map((motorcycle) => this.createMotorcycleDomain(motorcycle));
+      return motorcycleArray[0];
     }
-    throw new AppErrors(404, 'Motorcycle not found');
+    throw Error('Motorcycle not found');
   }
 
   public async updateMotorcycle(id: string, motorcycle: Partial<IMotorcyle>) {
@@ -42,7 +42,7 @@ class MotorcycleService {
     if (data) {
       return this.createMotorcycleDomain(data);
     } 
-    throw new AppErrors(404, 'Motorcycle not found');
+    throw Error('Motorcycle not found');
   }
 }
 

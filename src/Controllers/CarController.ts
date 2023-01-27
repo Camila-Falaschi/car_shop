@@ -32,8 +32,14 @@ class CarController {
 
   public async getCarById() {
     const { id } = this.req.params;
-    const car = await this.service.getCarById(id);
-    return this.res.status(200).json(car);
+    try {
+      const car = await this.service.getCarById(id);
+      return this.res.status(200).json(car);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return this.res.status(404).json({ message: error.message });
+      }
+    }
   }
 
   public async update() {
@@ -42,8 +48,10 @@ class CarController {
     try {
       const newCar = await this.service.updateCar(id, car);
       return this.res.status(200).json(newCar);
-    } catch (error) {
-      this.next(error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return this.res.status(404).json({ message: error.message });
+      }
     }
   }
 }

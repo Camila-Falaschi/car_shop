@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import CarController from '../Controllers/CarController';
+import Validations from '../Middleware/Validations';
 
 const carsRoute = Router();
 
@@ -13,10 +14,12 @@ carsRoute.get(
 );
 carsRoute.get(
   '/:id',
+  (req, res, next) => new Validations(req, res, next).validateId(),
   (req, res, next) => new CarController(req, res, next).getCarById(),
 );
 carsRoute.put(
   '/:id',
+  (req, res, next) => new Validations(req, res, next).validateId(),
   (req, res, next) => new CarController(req, res, next).update(),
 );
 

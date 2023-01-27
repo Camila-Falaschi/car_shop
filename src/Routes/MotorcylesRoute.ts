@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import MotorcycleController from '../Controllers/MotorcycleController';
+import Validations from '../Middleware/Validations';
 
 const motorcyclesRoute = Router();
 
@@ -13,10 +14,12 @@ motorcyclesRoute.get(
 );
 motorcyclesRoute.get(
   '/:id',
+  (req, res, next) => new Validations(req, res, next).validateId(),
   (req, res, next) => new MotorcycleController(req, res, next).getMotorcycleById(),
 );
 motorcyclesRoute.put(
   '/:id',
+  (req, res, next) => new Validations(req, res, next).validateId(),
   (req, res, next) => new MotorcycleController(req, res, next).update(),
 );
 

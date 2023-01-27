@@ -32,8 +32,14 @@ class MotorcycleController {
 
   public async getMotorcycleById() {
     const { id } = this.req.params;
-    const motorcycle = await this.service.getMotorcycleById(id);
-    return this.res.status(200).json(motorcycle);
+    try {
+      const motorcycle = await this.service.getMotorcycleById(id);
+      return this.res.status(200).json(motorcycle);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return this.res.status(404).json({ message: error.message });
+      }
+    }
   }
 
   public async update() {
@@ -42,8 +48,10 @@ class MotorcycleController {
     try {
       const newMotorcycle = await this.service.updateMotorcycle(id, motorcycle);
       return this.res.status(200).json(newMotorcycle);
-    } catch (error) {
-      this.next(error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return this.res.status(404).json({ message: error.message });
+      }
     }
   }
 }
