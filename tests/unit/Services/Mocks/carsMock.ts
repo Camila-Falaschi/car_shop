@@ -1,3 +1,23 @@
+export const createCar = {
+  model: 'Marea',
+  year: 2002,
+  color: 'Black',
+  buyValue: 15.99,
+  doorsQty: 4,
+  seatsQty: 5,
+};
+
+export const createdCar = {
+  id: '63d0901c65b9906b2eb8a97b',
+  model: 'Marea',
+  year: 2002,
+  color: 'Black',
+  status: false,
+  buyValue: 15.99,
+  doorsQty: 4,
+  seatsQty: 5,
+};
+
 export const carsArrayGetAll = [
   {
     id: '63d0901c65b9906b2eb8a97b',
@@ -35,3 +55,25 @@ export const carArrayGetById = [
     seatsQty: 5,
   },
 ];
+
+export const carGetByIdResult = {
+  id: '63d0901c65b9906b2eb8a97b',
+  model: 'Marea',
+  year: 2002,
+  color: 'Black',
+  status: true,
+  buyValue: 15.99,
+  doorsQty: 4,
+  seatsQty: 5,
+};
+
+export const updatedCar = {
+  id: '63d0901c65b9906b2eb8a97b',
+  model: 'Marea',
+  year: 2002,
+  color: 'Red',
+  status: true,
+  buyValue: 15.99,
+  doorsQty: 4,
+  seatsQty: 5,
+};
