@@ -7,6 +7,7 @@ import {
   createMotorcycle,
   createdMotorcycle,
   motorcycleArrayGetById,
+  motorcycleGetByIdResult,
   motorcycleId, motorcyclesArrayGetAll, updatedMotorcycle,
 } from './Mocks/motorcyclesMock';
 
@@ -15,7 +16,7 @@ describe('Motorcycles Service Layer', function () {
     Sinon.restore();
   });
 
-  it('Should create all cars succefully', async function () {
+  it('Should create a motorcycle succefully', async function () {
     const motorcycleResult = new Motorcycle(createMotorcycle);
     
     Sinon.stub(Model, 'create').resolves(motorcycleResult);
@@ -38,9 +39,9 @@ describe('Motorcycles Service Layer', function () {
   });
 
   it('Should get a motorcycle by its id succefully', async function () {
-    const motorcycleResult = motorcycleArrayGetById.map((item) => new Motorcycle(item));
+    const motorcycleResult = new Motorcycle(motorcycleGetByIdResult);
 
-    Sinon.stub(Model, 'findById').resolves(motorcycleResult);
+    Sinon.stub(Model, 'find').resolves(motorcycleArrayGetById);
 
     const service = new MotorcycleService();
     const result = await service.getMotorcycleById(motorcycleId);
@@ -51,7 +52,7 @@ describe('Motorcycles Service Layer', function () {
   it(
     'Should return an error if it try to find a motorcycle that does not exist', 
     async function () {
-      Sinon.stub(Model, 'findById').resolves([]);
+      Sinon.stub(Model, 'find').resolves([]);
 
       try {
         const service = new MotorcycleService();
@@ -65,18 +66,7 @@ describe('Motorcycles Service Layer', function () {
   it('Should update a motorcycle by its id succefully', async function () {
     const motorcycleResult = new Motorcycle(updatedMotorcycle);
 
-    Sinon.stub(Model, 'update').resolves();
-
-    const service = new MotorcycleService();
-    const result = await service.getMotorcycleById(motorcycleId);
-
-    expect(result).to.be.deep.equal(motorcycleResult);
-  });
-
-  it('Should update a car by its id succefully', async function () {
-    const motorcycleResult = new Motorcycle(updatedMotorcycle);
-
-    Sinon.stub(Model, 'update').resolves();
+    Sinon.stub(Model, 'findByIdAndUpdate').resolves(updatedMotorcycle);
 
     const service = new MotorcycleService();
     const result = await service.updateMotorcycle(motorcycleId, { color: 'red' });
@@ -87,7 +77,7 @@ describe('Motorcycles Service Layer', function () {
   it(
     'Should return an error if it try to update a motorcycle that does not exist', 
     async function () {
-      Sinon.stub(Model, 'update').resolves();
+      Sinon.stub(Model, 'findByIdAndUpdate').resolves();
 
       try {
         const service = new MotorcycleService();

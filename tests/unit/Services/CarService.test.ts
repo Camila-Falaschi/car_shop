@@ -5,7 +5,8 @@ import Car from '../../../src/Domains/Car';
 import CarService from '../../../src/Services/CarService';
 import {
   carArrayGetById,
-  carGetByIdResult, carId,
+  carGetByIdResult,
+  carId,
   carsArrayGetAll, createCar, createdCar, updatedCar,
 } from './Mocks/carsMock';
 
@@ -14,7 +15,7 @@ describe('Cars Service Layer', function () {
     Sinon.restore();
   });
 
-  it('Should create all cars succefully', async function () {
+  it('Should create a car succefully', async function () {
     const carResult = new Car(createdCar);
     
     Sinon.stub(Model, 'create').resolves(carResult);
@@ -37,18 +38,18 @@ describe('Cars Service Layer', function () {
   });
 
   it('Should get a car by its id succefully', async function () {
-    const carResult = carArrayGetById.map((item) => new Car(item));
+    const carResult = new Car(carGetByIdResult);
 
-    Sinon.stub(Model, 'findById').resolves(carResult);
+    Sinon.stub(Model, 'find').resolves(carArrayGetById);
 
     const service = new CarService();
     const result = await service.getCarById(carId);
 
-    expect(result).to.be.deep.equal(carGetByIdResult);
+    expect(result).to.be.deep.equal(carResult);
   });
   
   it('Should return an error if it try to find a car that does not exist', async function () {
-    Sinon.stub(Model, 'findById').resolves([]);
+    Sinon.stub(Model, 'find').resolves([]);
     
     try {
       const service = new CarService();
@@ -61,7 +62,7 @@ describe('Cars Service Layer', function () {
   it('Should update a car by its id succefully', async function () {
     const carResult = new Car(updatedCar);
 
-    Sinon.stub(Model, 'update').resolves();
+    Sinon.stub(Model, 'findByIdAndUpdate').resolves(updatedCar);
 
     const service = new CarService();
     const result = await service.updateCar(carId, { color: 'red' });
@@ -69,14 +70,17 @@ describe('Cars Service Layer', function () {
     expect(result).to.be.deep.equal(carResult);
   });
   
-  it('Should return an error if it try to update a car that does not exist', async function () {
-    Sinon.stub(Model, 'update').resolves();
+  it(
+    'Should return an error if it try to update a car that does not exist',
+    async function () {
+      Sinon.stub(Model, 'findByIdAndUpdate').resolves();
 
-    try {
-      const service = new CarService();
-      await service.updateCar(carId, { color: 'red' });
-    } catch (error) {
-      expect((error as Error).message).to.be.equal('Car not found');
-    }
-  });
+      try {
+        const service = new CarService();
+        await service.updateCar(carId, { color: 'red' });
+      } catch (error) {
+        expect((error as Error).message).to.be.equal('Car not found');
+      }
+    },
+  );
 });
